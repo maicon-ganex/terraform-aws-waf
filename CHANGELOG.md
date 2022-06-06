@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.1](https://github.com/ganexcloud/terraform-aws-waf/compare/v1.0.0...v1.0.1) (2022-06-06)
+
+
+### Bug Fixes
+
+* Generate new version ([5d5ae5f](https://github.com/ganexcloud/terraform-aws-waf/commit/5d5ae5f58a72a17d7d2c821c50028d538a8b4d54))
+
 ## 1.0.0 (2022-06-06)
 
 
