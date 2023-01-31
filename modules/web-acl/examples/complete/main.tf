@@ -11,24 +11,64 @@ module "waf_web_acl_test" {
     }
   ]
 
-  managed_rules = [
+ managed_rules = [
     {
-      name            = "AWSManagedRulesLinuxRuleSet",
-      priority        = 50
+      name            = "AWSManagedRulesCommonRuleSet",
+      priority        = 1
       override_action = "none"
-      excluded_rules  = []
+      rule_action_override  = [
+        {
+          name = "CrossSiteScripting_BODY"
+          action = "count"
+        },
+        {
+          name = "EC2MetaDataSSRF_BODY"
+          action = "count"
+        },
+        {
+          name = "SizeRestrictions_BODY"
+          action = "allow"
+        } 
+      ]
+    },
+    {
+      name            = "AWSManagedRulesSQLiRuleSet",
+      priority        = 2
+      override_action = "none"
+      rule_action_override  = []
+    },
+    {
+      name            = "AWSManagedRulesPHPRuleSet",
+      priority        = 3
+      override_action = "none"
+      rule_action_override  = []
+    },
+    {
+      name            = "AWSManagedRulesWordPressRuleSet",
+      priority        = 4
+      override_action = "none"
+      rule_action_override  = []
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList",
-      priority        = 2
-      override_action = "count"
-      excluded_rules  = []
+      priority        = 5
+      override_action = "none"
+      rule_action_override  = []
     },
     {
       name            = "AWSManagedRulesBotControlRuleSet",
-      priority        = 1
-      override_action = "count"
-      excluded_rules  = []
+      priority        = 6
+      override_action = "none"
+      rule_action_override  = [
+        {
+          name = "CategoryHttpLibrary"
+          action = "count"
+        },
+        {
+          name = "SignalNonBrowserUserAgent"
+          action = "count"
+        }
+      ]
     },
   ]
 }
