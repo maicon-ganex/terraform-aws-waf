@@ -45,10 +45,28 @@ resource "aws_wafv2_web_acl" "this" {
           name        = rule.value.name
           vendor_name = "AWS"
 
-          dynamic "excluded_rule" {
-            for_each = rule.value.excluded_rules
+          dynamic "rule_action_override" {
+            for_each = rule.value.rule_action_override
             content {
-              name = excluded_rule.value
+
+              action_to_use {
+                dynamic "allow" {
+                  for_each = rule_action_override.value.action == "allow" ? [1] : []
+                  content {}
+                }
+
+                dynamic "count" {
+                  for_each = rule_action_override.value.action == "count" ? [1] : []
+                  content {}
+                }
+
+                dynamic "block" {
+                  for_each = rule_action_override.value.action == "block" ? [1] : []
+                  content {}
+                }
+              }
+
+              name = rule_action_override.value.name
             }
           }
         }
@@ -262,6 +280,59 @@ resource "aws_wafv2_web_acl" "this" {
             for_each = rule.value.excluded_rules
             content {
               name = excluded_rule.value
+            }
+          }
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = rule.value.name
+        sampled_requests_enabled   = true
+      }
+    }
+  }
+
+  dynamic "rule" {
+    for_each = var.size_constraint_statement_rule
+    content {
+      name     = rule.value.name
+      priority = rule.value.priority
+
+      action {
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
+      }
+
+      statement {
+        size_constraint_statement {
+          field_to_match {
+            dynamic "body" {
+              for_each = rule.value.field_to_match == "body" ? [1] : []
+              content {
+                oversize_handling = rule.value.oversize_handling
+              }
+            }
+          }
+          comparison_operator = rule.value.comparison_operator
+          size = rule.value.size
+          dynamic "text_transformation" {
+            for_each = rule.value.text_transformation
+            content {
+              type = text_transformation.value.type
+              priority = text_transformation.value.priority
             }
           }
         }
