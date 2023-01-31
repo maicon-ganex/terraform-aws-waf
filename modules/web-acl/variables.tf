@@ -13,7 +13,10 @@ variable "managed_rules" {
     name            = string
     priority        = number
     override_action = string
-    excluded_rules  = list(string)
+    rule_action_override = list(object({
+      action = string
+      name = string
+    }))
   }))
   description = "List of Managed WAF rules."
   default     = []
@@ -97,6 +100,24 @@ variable "group_rules" {
     excluded_rules  = list(string)
   }))
   description = "List of WAFv2 Rule Groups."
+  default     = []
+}
+
+variable "size_constraint_statement_rule" {
+  type = list(object({
+    name                = string
+    priority            = number
+    action              = string
+    field_to_match      = string
+    oversize_handling   = string
+    comparison_operator = string
+    size                = number
+    text_transformation = list(object({
+      type     = string
+      priority = number
+    }))
+  }))
+  description = "List of WAFv2 Size Constraint Statement Rule."
   default     = []
 }
 

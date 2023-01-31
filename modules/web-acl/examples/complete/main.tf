@@ -16,19 +16,19 @@ module "waf_web_acl_test" {
       name            = "AWSManagedRulesLinuxRuleSet",
       priority        = 50
       override_action = "none"
-      excluded_rules  = []
+      rule_action_override  = []
     },
     {
       name            = "AWSManagedRulesAmazonIpReputationList",
       priority        = 2
       override_action = "count"
-      excluded_rules  = []
+      rule_action_override  = []
     },
     {
       name            = "AWSManagedRulesBotControlRuleSet",
       priority        = 1
       override_action = "count"
-      excluded_rules  = []
+      rule_action_override  = []
     },
   ]
 }
