@@ -327,11 +327,68 @@ resource "aws_wafv2_web_acl" "this" {
             }
           }
           comparison_operator = rule.value.comparison_operator
-          size = rule.value.size
+          size                = rule.value.size
           dynamic "text_transformation" {
             for_each = rule.value.text_transformation
             content {
-              type = text_transformation.value.type
+              type     = text_transformation.value.type
+              priority = text_transformation.value.priority
+            }
+          }
+        }
+      }
+
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = rule.value.name
+        sampled_requests_enabled   = true
+      }
+    }
+  }
+
+  dynamic "rule" {
+    for_each = var.byte_match_statement_rule
+    content {
+      name     = rule.value.name
+      priority = rule.value.priority
+
+      action {
+        dynamic "allow" {
+          for_each = rule.value.action == "allow" ? [1] : []
+          content {}
+        }
+
+        dynamic "count" {
+          for_each = rule.value.action == "count" ? [1] : []
+          content {}
+        }
+
+        dynamic "block" {
+          for_each = rule.value.action == "block" ? [1] : []
+          content {}
+        }
+      }
+
+      statement {
+        byte_match_statement {
+          positional_constraint = rule.value.positional_constraint
+          search_string         = rule.value.search_string
+          field_to_match {
+            dynamic "headers" {
+              for_each = rule.value.field_to_match == "headers" ? [1] : []
+              content {
+                oversize_handling = rule.value.oversize_handling
+                match_scope       = rule.value.match_scope
+                match_pattern {
+                  included_headers = ["User-Agent"]
+                }
+              }
+            }
+          }
+          dynamic "text_transformation" {
+            for_each = rule.value.text_transformation
+            content {
+              type     = text_transformation.value.type
               priority = text_transformation.value.priority
             }
           }
