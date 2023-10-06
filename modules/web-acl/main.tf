@@ -1,4 +1,4 @@
-resource "aws_wafv2_web_acl" "this" {
+resource "aws_wafv2_web_acl" "this" { 
   name        = var.name
   description = "WAFv2 ACL for ${var.name}"
 
