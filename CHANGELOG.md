@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.2](https://github.com/ganexcloud/terraform-aws-waf/compare/v2.0.1...v2.0.2) (2023-10-06)
+
+
+### Bug Fixes
+
+* Added variable byte_match_statement_rule ([78cb021](https://github.com/ganexcloud/terraform-aws-waf/commit/78cb021c53bd4feee200899db0994a1496b4fda7))
+
 ### [2.0.1](https://github.com/ganexcloud/terraform-aws-waf/compare/v2.0.0...v2.0.1) (2023-10-06)
 
 
