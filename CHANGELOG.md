@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.1](https://github.com/ganexcloud/terraform-aws-waf/compare/v2.0.0...v2.0.1) (2023-10-06)
+
+
+### Bug Fixes
+
+* Updated managed_rules block ([3cce803](https://github.com/ganexcloud/terraform-aws-waf/commit/3cce803fee2e4dd73d1e5297dea5aa040c669b68))
+
 ## [2.0.0](https://github.com/ganexcloud/terraform-aws-waf/compare/v1.1.0...v2.0.0) (2023-01-31)
 
 
