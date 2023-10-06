@@ -15,7 +15,7 @@ variable "managed_rules" {
     override_action = string
     rule_action_override = list(object({
       action = string
-      name = string
+      name   = string
     }))
   }))
   description = "List of Managed WAF rules."
@@ -121,6 +121,23 @@ variable "size_constraint_statement_rule" {
   default     = []
 }
 
+variable "byte_match_statement_rule" {
+  type = list(object({
+    name                  = string
+    priority              = number
+    action                = string
+    field_to_match        = string
+    positional_constraint = string
+    search_string         = string
+    oversize_handling     = string
+    match_scope           = string
+    text_transformation = list(object({
+      type     = string
+      priority = number
+    }))
+  }))
+  default = []
+}
 variable "default_action" {
   type        = string
   description = "The action to perform if none of the rules contained in the WebACL match."
