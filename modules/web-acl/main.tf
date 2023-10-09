@@ -1,4 +1,5 @@
 resource "aws_wafv2_web_acl" "this" {
+  version = 4.67.0
   name        = var.name
   description = "WAFv2 ACL for ${var.name}"
 
